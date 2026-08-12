@@ -27,54 +27,39 @@ assets/icons/       favicon, אייקון מסך הבית והסמן המותא�
 
 ## מערכת LIVE
 
-האתר תומך במולטי־סטרים אמיתי: כל פלטפורמה מקבלת סטטוס עצמאי, וכמה פלטפורמות יכולות להיות בשידור בו־זמנית.
+האתר מחובר ל־Cloudflare Worker ציבורי שמחזיר את סטטוס השידור:
 
-כל עוד `liveStatusApiUrl` ריק בקובץ `config.js`, לא נשלחת אף בקשת רשת ולא מוצג אף תג LIVE — האתר עובד רגיל.
-
-כאשר יוקם שירות אמיתי, יש למלא את הכתובת:
-
-```js
-window.ATRAXITA_CONFIG = {
-  liveStatusApiUrl: "https://api.example.com/live-status",
-  production: true
-};
+```text
+https://atraxita-live-status.liadsh14.workers.dev/
 ```
 
-השירות צריך להחזיר JSON במבנה הבא:
+זהו מקור המידע היחיד. האתר אינו פונה ישירות ל־Kick API או ל־YouTube API, ואין בו מפתחות API, Client ID או Client Secret — כולם נשמרים בצד השרת של ה־Worker בלבד. הכתובת נמצאת ב־`config.js` וניתן להחליפה או לרוקן אותה כדי לכבות את הבדיקה.
+
+מבנה התשובה:
 
 ```json
 {
+  "ok": true,
   "checkedAt": "2026-08-12T18:00:00Z",
   "platforms": {
-    "kick":      { "status": "live",    "url": "https://kick.com/atraxita" },
-    "twitch":    { "status": "live",    "url": "https://www.twitch.tv/atraxita" },
-    "youtube":   { "status": "offline", "url": "https://www.youtube.com/Atraxita" },
-    "tiktok":    { "status": "unknown" },
-    "instagram": { "status": "unknown" }
+    "kick":    { "status": "live",    "live": true,  "isLive": true,  "label": "בשידור חי עכשיו", "url": "https://kick.com/atraxita" },
+    "youtube": { "status": "offline", "live": false, "isLive": false, "label": "", "url": "https://www.youtube.com/Atraxita" }
   }
 }
 ```
 
-* ערכי סטטוס אפשריים: `live`, `offline`, `unknown`, `error`.
-* אפשר להוסיף לכל פלטפורמה `title` ו־`viewers` והם יוצגו בטקסט קטן בכרטיס.
-* האתר בודק סטטוס בטעינה ואחת ל־60 שניות, ומפסיק לבדוק כשהלשונית אינה פעילה.
-* סטטוס ישן מ־120 שניות לפי `checkedAt` נחשב לא תקף ולא מוצג.
-* בשגיאה, ב־404 או כשאין endpoint — התגים מוסתרים והקישורים ממשיכים לעבוד כרגיל.
+* Kick ו־YouTube מטופלים בנפרד לחלוטין. שידור באחד אינו משפיע על השני, ושניהם יכולים להיות בשידור יחד.
+* Twitch, טיקטוק ואינסטגרם אינם מחוברים ולעולם לא מוצג עליהם תג שידור.
+* בדיקה בטעינת האתר ואחת ל־60 שניות, עם timeout של 8 שניות ובלי בקשות חופפות. הבדיקה נעצרת כשהלשונית אינה פעילה.
+* סטטוס ישן מ־120 שניות לפי `checkedAt` נחשב לא תקף.
+* בשידור חי מוצגים בכרטיס נקודה פועמת בצבע המותג (ירוק בקיק, אדום ביוטיוב), הכיתוב "בשידור חי עכשיו", וכפתור "לצפייה בשידור". אם ה־Worker מחזיר `title` או `viewers` הם מוצגים בשורה קטנה.
+* התג נושא `aria-live="polite"` ותיאור נגיש מלא, ואינו מסתמך על צבע בלבד. ב־`prefers-reduced-motion` הפעימה נעצרת.
+* שדה `url` מתקבל רק אם הוא HTTPS בדומיין `kick.com` או `youtube.com`. אחרת נעשה שימוש בקישור הקבוע של הכרטיס.
+* בשגיאה, ב־404, ב־timeout או כשה־Worker אינו זמין — התגים מוסתרים, לא מוצגת שגיאה למשתמש, וההודעה נרשמת ב־console בלבד. סטטוס LIVE ישן לא נשמר.
 
 ### אבטחה
 
-מפתחות API, Client Secret ו־Access Tokens נשמרים אך ורק בצד השרת של ה־endpoint. אין להכניס אותם לחבילה הזו או למאגר. השירות צריך להתיר CORS לדומיין האתר בלבד.
-
-## מצב בדיקה
-
-בסביבת פיתוח בלבד אפשר להדמות שידור בכמה פלטפורמות יחד:
-
-```text
-?liveTest=kick,twitch
-?liveTest=kick,twitch,youtube
-```
-
-`production: true` בקובץ `config.js` מנטרל את מצב הבדיקה, וכך הוא לא יפעל באתר החי.
+החבילה אינה מכילה מפתחות, טוקנים או סודות. הקוד אינו משתמש ב־`eval`, ב־`new Function`, ב־`document.write` או ב־`innerHTML`, וכל הנתונים מה־Worker נכתבים דרך `textContent` ומאפיינים מאומתים. לכל קישור חיצוני יש `rel="noopener noreferrer"`. ה־Worker צריך להתיר CORS לדומיין האתר.
 
 ## הערות תחזוקה
 
@@ -82,3 +67,10 @@ window.ATRAXITA_CONFIG = {
 * שני אייקוני שרתים הם GIF מונפש ולכן נשמרו כפי שהם כדי לא לאבד את האנימציה. הם נטענים בטעינה עצלה.
 * החלפת הלוגו: החליפו את `assets/images/atraxita-logo-clean.png` ואת הקבצים ב־`assets/icons/` באותם שמות.
 * לשיתוף ברשתות מומלץ להחליף את `og:image` ב־`index.html` לכתובת מלאה של האתר, לדוגמה `https://<משתמש>.github.io/atraxita/assets/images/banner-a.jpg`.
+
+
+## רקע וידאו
+
+רקע האתר הוא סרטון לופ קצר: `assets/video/bg-loop.mp4` (2.4MB, ללא סאונד).
+התמונה `assets/images/bg-loop-poster.jpg` היא הפריים הראשון והיא מוצגת עד שהסרטון נטען, וגם למי שהפעיל "עצירת אנימציות" או `prefers-reduced-motion`.
+להחלפת הרקע יש להחליף את שני הקבצים בשמות זהים.

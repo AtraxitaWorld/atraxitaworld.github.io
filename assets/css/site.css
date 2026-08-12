@@ -1,7 +1,12 @@
-/* אטרקציה | הקישורים הרשמיים — סגנונות בסיס, גופנים ואנימציות */
+
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#050506;overflow-x:hidden;height:auto!important;min-height:100dvh}
-#dc-root,#dc-root>.sc-host{height:auto!important;min-height:100dvh}
+html{scrollbar-gutter:stable;scroll-behavior:auto}
+html,body{overflow-anchor:none}
+@media (max-width:560px){[data-about]{position:static!important;margin:20px auto 0!important}}
+@media (min-width:620px){[data-gear] li:last-child:nth-child(3n+1){grid-column:2}}
+@media (max-width:619px){[data-gear],[data-pcs]{grid-template-columns:1fr!important}}
+html,body{margin:0;padding:0;background:#050506;overflow-x:hidden;height:auto!important;min-height:100svh}
+#dc-root,#dc-root>.sc-host{height:auto!important;min-height:100svh}
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:#e9e9ee;text-decoration:none}
 a:hover{color:#ffffff}
@@ -16,7 +21,6 @@ input[type="text"],input[type="search"],input[type="email"],textarea,[contentedi
 @property --disc{syntax:"<number>";inherits:true;initial-value:0}
 @property --modal{syntax:"<number>";inherits:true;initial-value:0}
 @property --panel{syntax:"<number>";inherits:true;initial-value:0}
-@property --seg{syntax:"<number>";inherits:true;initial-value:0}
 @property --itab{syntax:"<number>";inherits:true;initial-value:0}
 @property --ilang{syntax:"<number>";inherits:true;initial-value:0}
 @property --hov{syntax:"<number>";inherits:true;initial-value:0}
