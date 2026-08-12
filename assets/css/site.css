@@ -1,0 +1,99 @@
+/* אטרקציה | הקישורים הרשמיים — סגנונות בסיס, גופנים ואנימציות */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#050506;overflow-x:hidden;height:auto!important;min-height:100dvh}
+#dc-root,#dc-root>.sc-host{height:auto!important;min-height:100dvh}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:#e9e9ee;text-decoration:none}
+a:hover{color:#ffffff}
+button{font:inherit;color:inherit}
+::selection{background:#7e0f19;color:#fff}
+@media (hover:hover) and (pointer:fine){
+html,body,*{cursor:url("../icons/atraxita-cursor.png") 16 16,auto}
+a,button,[role="button"],summary,label,select,input[type="range"],input[type="checkbox"],input[type="radio"],[tabindex],[style*="cursor:pointer"],[style*="cursor: pointer"]{cursor:url("../icons/atraxita-cursor.png") 16 16,pointer!important}
+input[type="text"],input[type="search"],input[type="email"],textarea,[contenteditable="true"]{cursor:text}
+}
+:focus-visible{outline:3px solid #ff7b85;outline-offset:3px;border-radius:6px}
+@property --disc{syntax:"<number>";inherits:true;initial-value:0}
+@property --modal{syntax:"<number>";inherits:true;initial-value:0}
+@property --panel{syntax:"<number>";inherits:true;initial-value:0}
+@property --seg{syntax:"<number>";inherits:true;initial-value:0}
+@property --itab{syntax:"<number>";inherits:true;initial-value:0}
+@property --ilang{syntax:"<number>";inherits:true;initial-value:0}
+@property --hov{syntax:"<number>";inherits:true;initial-value:0}
+@property --act{syntax:"<number>";inherits:true;initial-value:0}
+@property --ambOn{syntax:"<number>";inherits:true;initial-value:0}
+@property --liveGlow{syntax:"<number>";inherits:true;initial-value:0}
+@property --decor{syntax:"<number>";inherits:true;initial-value:1}
+@property --scrim{syntax:"<number>";inherits:true;initial-value:0.55}
+@property --sheen{syntax:"<number>";inherits:true;initial-value:1}
+@property --stmt{syntax:"<number>";inherits:true;initial-value:0}
+@property --pz{syntax:"<number>";inherits:true;initial-value:1}
+@property --rx{syntax:"<angle>";inherits:false;initial-value:0deg}
+@property --ry{syntax:"<angle>";inherits:false;initial-value:0deg}
+@property --px{syntax:"<length>";inherits:true;initial-value:0px}
+@property --py{syntax:"<length>";inherits:true;initial-value:0px}
+@property --sd0{syntax:"<time>";inherits:true;initial-value:0ms}
+@property --sd1{syntax:"<time>";inherits:true;initial-value:0ms}
+@property --sd2{syntax:"<time>";inherits:true;initial-value:0ms}
+@property --sd3{syntax:"<time>";inherits:true;initial-value:0ms}
+@property --sd4{syntax:"<time>";inherits:true;initial-value:0ms}
+@property --sd5{syntax:"<time>";inherits:true;initial-value:0ms}
+@keyframes axFade{from{opacity:1}to{opacity:0}}
+@keyframes axIn{from{opacity:0}to{opacity:1}}
+@keyframes axRed{from{opacity:0}to{opacity:1}}
+@keyframes axLogo{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes axUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes axBreath{0%{transform:scale(1)}50%{transform:scale(1.015)}100%{transform:scale(1)}}
+@keyframes axSheen{0%{transform:translateX(-215%) rotate(8deg)}14%{transform:translateX(215%) rotate(8deg)}100%{transform:translateX(215%) rotate(8deg)}}
+@keyframes axDriftA{from{transform:translate3d(-26px,0,0)}to{transform:translate3d(26px,-10px,0)}}
+@keyframes axDriftB{from{transform:translate3d(22px,6px,0)}to{transform:translate3d(-22px,-6px,0)}}
+@keyframes axPulse{0%{opacity:.34}50%{opacity:.72}100%{opacity:.34}}
+@keyframes axGlow{0%{opacity:.5;transform:scale(1)}50%{opacity:.85;transform:scale(1.05)}100%{opacity:.5;transform:scale(1)}}
+@keyframes axLine{0%{opacity:0}18%{opacity:.75}46%{opacity:.08}70%{opacity:.5}100%{opacity:0}}
+@keyframes axFloor{0%{transform:translateX(-6%);opacity:.35}50%{transform:translateX(6%);opacity:.65}100%{transform:translateX(-6%);opacity:.35}}
+@keyframes axRise{0%{transform:translate3d(0,0,0) scale(.5);opacity:0}14%{opacity:.85}72%{opacity:.4}100%{transform:translate3d(14px,-74vh,0) scale(1);opacity:0}}
+@keyframes axSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes axFloatY{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}
+@keyframes axTiltS{0%{transform:perspective(760px) rotateY(-1.5deg) rotateX(.5deg)}50%{transform:perspective(760px) rotateY(1.5deg) rotateX(-.5deg)}100%{transform:perspective(760px) rotateY(-1.5deg) rotateX(.5deg)}}
+@keyframes axGleam{0%{transform:translateX(-170%) rotate(14deg);opacity:0}3%{opacity:.85}11%{transform:translateX(170%) rotate(14deg);opacity:0}100%{transform:translateX(170%) rotate(14deg);opacity:0}}
+@keyframes axIntroEntry{0%{opacity:0;transform:translate3d(0,24px,-140px) rotateY(-72deg) rotateZ(-5deg) scale(.62)}22%{opacity:1}58%{opacity:1;transform:translate3d(0,-5px,25px) rotateY(10deg) rotateZ(1deg) scale(1.08)}78%{opacity:1;transform:translate3d(0,2px,8px) rotateY(-5deg) rotateZ(0deg) scale(.98)}100%{opacity:1;transform:translate3d(0,0,0) rotateY(0deg) rotateZ(0deg) scale(1)}}
+@keyframes axIntroIdle{0%{transform:translate3d(0,0,0) rotateX(-2deg) rotateY(-3deg)}100%{transform:translate3d(0,-5px,0) rotateX(2deg) rotateY(3deg)}}
+@keyframes axCopyIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes axIdle3D{0%{transform:rotateY(0deg) rotateX(0deg) translateY(0)}25%{transform:rotateY(3deg) rotateX(-2deg) translateY(-3px)}50%{transform:rotateY(0deg) rotateX(0deg) translateY(0)}75%{transform:rotateY(-3deg) rotateX(2deg) translateY(-1.5px)}100%{transform:rotateY(0deg) rotateX(0deg) translateY(0)}}
+@keyframes axRingIn{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes axPulseOut{0%{opacity:0;transform:scale(.6)}25%{opacity:.65}100%{opacity:0;transform:scale(1.25)}}
+@keyframes axArcRun{0%{transform:rotate(0deg);opacity:0}5%{opacity:.95}17%{opacity:0}100%{transform:rotate(360deg);opacity:0}}
+@keyframes axSpinRev{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+@keyframes axBgIn{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+@keyframes axSideR{from{transform:translateX(0)}to{transform:translateX(16px)}}
+@keyframes axSideL{from{transform:translateX(0)}to{transform:translateX(-16px)}}
+@keyframes axTilt{0%{opacity:0;transform:perspective(900px) rotateY(25deg) scale(.985)}55%{opacity:1}100%{opacity:1;transform:perspective(900px) rotateY(0deg) scale(1)}}
+@keyframes axPanel{from{transform:translateX(0)}to{transform:translateX(var(--pd,14px))}}
+@keyframes axSmokeIn{from{opacity:0;transform:translateX(var(--sd,40px))}to{opacity:1;transform:translateX(0)}}
+@keyframes axCrack{from{stroke-dashoffset:240}to{stroke-dashoffset:0}}
+@keyframes axAOut{0%{stroke-dashoffset:900;opacity:0}55%{opacity:1}100%{stroke-dashoffset:0;opacity:.8}}
+@keyframes axDolly{from{transform:scale(1)}to{transform:scale(1.028)}}
+@keyframes axEmber{0%{transform:translate3d(0,0,0) scale(.6);opacity:0}18%{opacity:1}100%{transform:translate3d(var(--ex,6px),-46vh,0) scale(1);opacity:0}}
+@keyframes axFloorUp{from{opacity:0}to{opacity:1}}
+@keyframes axRing{from{stroke-dashoffset:578}to{stroke-dashoffset:0}}
+@keyframes axRide{0%{transform:rotate(0deg);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:rotate(360deg);opacity:0}}
+@keyframes axSweep{from{transform:translateX(-160%)}to{transform:translateX(160%)}}
+@keyframes axHalo{0%{transform:scale(1)}50%{transform:scale(1.045)}100%{transform:scale(1)}}
+@keyframes axGrain{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(-2%,1%,0)}50%{transform:translate3d(1%,-2%,0)}75%{transform:translate3d(-1%,-1%,0)}100%{transform:translate3d(0,0,0)}}
+@keyframes axShine{0%{transform:translateY(-110%);opacity:0}6%{opacity:1}26%{transform:translateY(330%);opacity:0}100%{transform:translateY(330%);opacity:0}}
+@keyframes axRule{0%{transform:scaleX(.35);opacity:.5}50%{transform:scaleX(1);opacity:1}100%{transform:scaleX(.35);opacity:.5}}
+@keyframes axSignal{0%{transform:scale(.82);opacity:.85}55%{transform:scale(1.45);opacity:0}100%{transform:scale(1.45);opacity:0}}
+@keyframes axChromaA{0%{transform:translate(0,0)}10%{transform:translate(1.6px,-1.2px)}24%{transform:translate(0,0)}100%{transform:translate(0,0)}}
+@keyframes axChromaB{0%{transform:translate(0,0)}10%{transform:translate(-1.6px,1.2px)}24%{transform:translate(0,0)}100%{transform:translate(0,0)}}
+@keyframes axSmokeA{0%{transform:translate3d(0,0,0) scale(1);opacity:.42}50%{transform:translate3d(-3%,-2.5%,0) scale(1.14);opacity:.72}100%{transform:translate3d(0,0,0) scale(1);opacity:.42}}
+@keyframes axSmokeB{0%{transform:translate3d(0,0,0) scale(1.06);opacity:.38}50%{transform:translate3d(3.5%,2%,0) scale(1);opacity:.66}100%{transform:translate3d(0,0,0) scale(1.06);opacity:.38}}
+@keyframes axSmokeC{0%{transform:translate3d(-4%,0,0) scale(1);opacity:.3}50%{transform:translate3d(4%,-1.5%,0) scale(1.09);opacity:.55}100%{transform:translate3d(-4%,0,0) scale(1);opacity:.3}}
+@keyframes axShardRun{0%{transform:translateY(-75%);opacity:0}4%{opacity:.9}18%{opacity:.6}30%{transform:translateY(135%);opacity:0}100%{transform:translateY(135%);opacity:0}}
+@keyframes axShimmer{0%{transform:translateX(-42%);opacity:0}12%{opacity:.42}30%{opacity:.3}44%{transform:translateX(42%);opacity:0}100%{transform:translateX(42%);opacity:0}}
+@keyframes axFog{0%{transform:translateX(-7%) scaleY(1);opacity:.14}50%{transform:translateX(7%) scaleY(1.18);opacity:.4}100%{transform:translateX(-7%) scaleY(1);opacity:.14}}
+@keyframes axCardHalo{0%{opacity:.3;transform:translateX(-50%) scale(1)}50%{opacity:.58;transform:translateX(-50%) scale(1.05)}100%{opacity:.3;transform:translateX(-50%) scale(1)}}
+@keyframes axSideLight{0%{opacity:.28}50%{opacity:.62}100%{opacity:.28}}
+@keyframes axReflect{0%{opacity:.72;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.07)}100%{opacity:.72;transform:translateX(-50%) scale(1)}}
+@keyframes axLiveRing{0%,100%{transform:scale(1);opacity:calc(var(--liveGlow,0) * .55)}50%{transform:scale(1.045);opacity:var(--liveGlow,0)}}
+@keyframes axDot{0%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.72)}100%{opacity:1;transform:scale(1)}}
+@keyframes axLivePulse{0%{opacity:.16;transform:scale(1)}50%{opacity:.46;transform:scale(1.1)}100%{opacity:.16;transform:scale(1)}}
